@@ -13,7 +13,7 @@ export const colors = {
 
 
 
-export const AppTheme = StyleSheet.create({
+export const styles = StyleSheet.create({
     background: {
         flex: 1,
         backgroundColor: colors.background,

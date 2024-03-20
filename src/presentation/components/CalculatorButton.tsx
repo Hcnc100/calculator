@@ -2,38 +2,42 @@
 
 import React from 'react'
 import { Pressable, Text } from 'react-native'
-import { AppTheme } from '../../config/theme/app-theme'
+import { styles } from '../../config/theme/app-theme'
 
 interface CalculatorButtonProps {
-    text: string;
+    label: string;
     color?: string;
     doubleSize?: boolean;
     blackText?: boolean;
+    onPress: () => void;
 }
 
 
 export const CalculatorButton = (
     {
-        text,
-        color = AppTheme.button.backgroundColor,
+        label,
+        color = styles.button.backgroundColor,
         doubleSize = false,
         blackText = false,
+        onPress
     }: CalculatorButtonProps
 ) => {
     return (
-        <Pressable style={
-            ({ pressed }) => ({
-                ...AppTheme.button,
-                backgroundColor: color,
-                opacity: pressed ? 0.8 : 1,
-                width: (doubleSize) ? 180 : 80,
+        <Pressable
+            onPress={onPress}
+            style={
+                ({ pressed }) => ({
+                    ...styles.button,
+                    backgroundColor: color,
+                    opacity: pressed ? 0.8 : 1,
+                    width: (doubleSize) ? 180 : 80,
 
-            })
-        }>
+                })
+            }>
             <Text style={{
-                ...AppTheme.buttonText,
+                ...styles.buttonText,
                 color: (blackText) ? 'black' : 'white',
-            }}>{text}</Text>
+            }}>{label}</Text>
         </Pressable>
     )
 }

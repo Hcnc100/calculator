@@ -1,93 +1,96 @@
+import { Pressable, Text, View } from 'react-native';
+import { colors, styles } from '../../config/theme/app-theme';
+import { CalculatorButton } from '../components/CalculatorButton';
+import { useCalculator } from '../hooks/useCalculator';
 
 
-
-import React from 'react'
-import { Pressable, Text, View } from 'react-native'
-import { AppTheme, colors } from '../../config/theme/app-theme';
-import { CalculatorButton } from '../components/CalculatorButton'
 
 export const CalculatorScreen = () => {
+
+    const {
+        formula, number, prevNumber, buildNumber, toggleSign,
+        clean, deleteOperation,
+        divideOperation, multiplyOperation, subtractOperation, addOperation,
+        calculateResult,
+    } = useCalculator();
+
     return (
-        <View style={AppTheme.calculatorContainer}>
-            <View style={{
-                paddingHorizontal: 20,
-                paddingBottom: 10,
-            }}>
-                <Text style={AppTheme.mainResult}>1500</Text>
-                <Text style={AppTheme.subResult}>15</Text>
-            </View>
+        <View style={styles.calculatorContainer}>
 
-            <View style={AppTheme.row}>
+            <View style={{ paddingHorizontal: 30, paddingBottom: 20 }}>
 
-                <CalculatorButton
-                    blackText
-                    text="C"
-                    color={colors.lightGray}
-                />
-                <CalculatorButton
-                    blackText
-                    text="+/-"
-                    color={colors.lightGray} />
-
-                <CalculatorButton
-                    blackText
-                    text="del"
-                    color={colors.lightGray} />
-
-                <CalculatorButton
-                    text="÷"
-                    color={colors.orange} />
+                <Text
+                    adjustsFontSizeToFit
+                    numberOfLines={1}
+                    style={styles.mainResult}>{formula}</Text>
 
 
-            </View>
-
-            <View style={AppTheme.row}>
-
-                <CalculatorButton text="7" />
-                <CalculatorButton text="8" />
-                <CalculatorButton text="9" />
-
-                <CalculatorButton
-                    text="x"
-                    color={colors.orange} />
+                {
+                    (formula === prevNumber)
+                        ? <Text style={styles.subResult}> </Text>
+                        : (
+                            <Text
+                                adjustsFontSizeToFit
+                                numberOfLines={1}
+                                style={styles.subResult}>
+                                {prevNumber}
+                            </Text>
+                        )
+                }
+                {/* <Text
+                adjustsFontSizeToFit
+                numberOfLines={ 1 }
+                style={ styles.subResult }>
+                {  prevNumber }
+              </Text> */}
             </View>
 
 
-            <View style={AppTheme.row}>
+            <View style={styles.row}>
 
-                <CalculatorButton text="6" />
-                <CalculatorButton text="5" />
-                <CalculatorButton text="4" />
+                <CalculatorButton onPress={clean} label="C" blackText color={colors.lightGray} />
+                <CalculatorButton onPress={toggleSign} label="+/-" blackText color={colors.lightGray} />
+                <CalculatorButton onPress={deleteOperation} label="del" blackText color={colors.lightGray} />
+                <CalculatorButton onPress={divideOperation} label="÷" color={colors.orange} />
 
-                <CalculatorButton
-                    text="-"
-                    color={colors.orange} />
             </View>
 
+            <View style={styles.row}>
 
-            <View style={AppTheme.row}>
+                <CalculatorButton onPress={() => buildNumber('7')} label="7" />
+                <CalculatorButton onPress={() => buildNumber('8')} label="8" />
+                <CalculatorButton onPress={() => buildNumber('9')} label="9" />
+                <CalculatorButton onPress={multiplyOperation} label="x" color={colors.orange} />
 
-                <CalculatorButton text="1" />
-                <CalculatorButton text="2" />
-                <CalculatorButton text="3" />
-
-                <CalculatorButton
-                    text="+"
-                    color={colors.orange} />
             </View>
 
+            <View style={styles.row}>
 
-            <View style={AppTheme.row}>
+                <CalculatorButton onPress={() => buildNumber('4')} label="4" />
+                <CalculatorButton onPress={() => buildNumber('5')} label="5" />
+                <CalculatorButton onPress={() => buildNumber('6')} label="6" />
+                <CalculatorButton onPress={subtractOperation} label="-" color={colors.orange} />
 
-                <CalculatorButton text="0" doubleSize />
-                <CalculatorButton text="." />
+            </View>
 
-                <CalculatorButton
-                    text="="
-                    color={colors.orange} />
+            <View style={styles.row}>
+
+                <CalculatorButton onPress={() => buildNumber('1')} label="1" />
+                <CalculatorButton onPress={() => buildNumber('2')} label="2" />
+                <CalculatorButton onPress={() => buildNumber('3')} label="3" />
+                <CalculatorButton onPress={addOperation} label="+" color={colors.orange} />
+
+            </View>
+
+            <View style={styles.row}>
+
+                <CalculatorButton onPress={() => buildNumber('0')} label="0" doubleSize />
+                <CalculatorButton onPress={() => buildNumber('.')} label="." />
+                <CalculatorButton onPress={calculateResult} label="=" color={colors.orange} />
+
             </View>
 
 
         </View>
-    )
-}
+    );
+};
